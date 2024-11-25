@@ -92,11 +92,6 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     
-                    // Show loading indicator if getting next page
-                    if viewModel.backgroundStates.contains(.gettingNextPage) {
-                        ProgressView()
-                    }
-                    
                     Button("App Settings", systemImage: "gearshape.fill") {
                         isAppSettingsPresented = true
                     }
