@@ -98,8 +98,6 @@ final class ContentViewModel {
             
             do {
                 
-                try await Task.sleep(for: .seconds(2))
-                
                 let nextPage = try await apiClient.getPage(index: pageIndex)
                 
                 await MainActor.run {

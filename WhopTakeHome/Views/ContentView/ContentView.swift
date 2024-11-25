@@ -24,6 +24,9 @@ struct ContentView: View {
     /// Whether the view has appeared or not.
     @State
     private var hasAppeared = false
+    /// The flag to present the app settings sheet.
+    @State
+    private var isAppSettingsPresented = false
     
     /// The view model for this content view.
     private var viewModel = ContentViewModel(apiClient: BasicAPIClient())
@@ -88,10 +91,20 @@ struct ContentView: View {
             }
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
+                    
+                    // Show loading indicator if getting next page
                     if viewModel.backgroundStates.contains(.gettingNextPage) {
                         ProgressView()
                     }
+                    
+                    Button("App Settings", systemImage: "gearshape.fill") {
+                        isAppSettingsPresented = true
+                    }
+                    .labelStyle(.iconOnly)
                 }
+            }
+            .sheet(isPresented: $isAppSettingsPresented) {
+                AppSettingsView()
             }
         }
     }

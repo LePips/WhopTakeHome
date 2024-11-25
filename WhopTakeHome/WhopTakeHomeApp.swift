@@ -12,6 +12,7 @@ struct WhopTakeHomeApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(AppSettings.shared)
         }
     }
 }

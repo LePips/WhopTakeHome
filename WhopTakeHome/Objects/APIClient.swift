@@ -78,6 +78,12 @@ class BasicAPIClient: APIClient {
     }
     
     func getPage(index: Int) async throws -> [WebsiteContent] {
-        makeMockPage()
+        
+        // For demo, allow simulating a delay in fetching pages
+        if AppSettings.shared.listPageLoadTime > 0 {
+            try? await Task.sleep(for: .seconds(AppSettings.shared.listPageLoadTime))
+        }
+        
+        return makeMockPage()
     }
 }
