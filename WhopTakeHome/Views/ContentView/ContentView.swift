@@ -15,6 +15,9 @@ struct ContentView: View {
     /// The size of the content view.
     @State
     private var contentSize: CGSize = .zero
+    /// The coordinator for this navigation flow.
+    @Bindable
+    private var coordinator = MainCoordinator()
     /// The ids to track expanded sections.
     @State
     private var expandedSections: Set<UUID> = []
@@ -22,12 +25,25 @@ struct ContentView: View {
     @State
     private var hasAppeared = false
     
-    /// The coordinator for this navigation flow.
-    @Bindable
-    private var coordinator = MainCoordinator()
-    
     /// The view model for this content view.
     private var viewModel = ContentViewModel(apiClient: BasicAPIClient())
+    
+    /// Rows for a loading state to be redacted.
+    private var loadingRows: [WebsiteContent] {
+        var items: [WebsiteContent] = []
+        
+        for _ in 0 ..< 5 {
+            let title = String(repeating: "A", count: Int.random(in: 10 ... 20))
+            
+            if Double.random(in: 0 ... 1) < 0.3 {
+                items.append(.folder(.init(title: title, contents: [])))
+            } else {
+                items.append(.static(.init(title: title, url: URL(string: "https://example.com")!)))
+            }
+        }
+        
+        return items
+    }
     
     // MARK: - body
     
@@ -96,6 +112,21 @@ struct ContentView: View {
             }
             .listRowSeparator(.hidden)
             
+            // Placeholder rows while loading the next page
+            if viewModel.backgroundStates.contains(.gettingNextPage) {
+                ForEach(loadingRows) { row in
+                    switch row {
+                    case let .static(content):
+                        makeStaticRow(content)
+                    case let .folder(content):
+                        makeFolderRow(content)
+                    }
+                }
+                .listRowSeparator(.hidden)
+                .redacted(reason: .placeholder)
+                .allowsHitTesting(false)
+            }
+            
             // Track offset to determine when to get the next page.
             // Would typically introspect or use iOS 18's `onScrollGeometryChange`
             Color.clear
@@ -109,9 +140,6 @@ struct ContentView: View {
                         viewModel.getNextPageBackground()
                     }
                 }
-                .listRowSeparator(.hidden)
-            
-            ProgressView()
                 .listRowSeparator(.hidden)
         }
         .animation(.linear(duration: 0.2), value: viewModel.rows)
@@ -166,7 +194,22 @@ struct ContentView: View {
     
     @ViewBuilder
     private var loadingView: some View {
-        ProgressView()
+        List {
+            ForEach(loadingRows) { row in
+                switch row {
+                case let .static(content):
+                    makeStaticRow(content)
+                case let .folder(content):
+                    makeFolderRow(content)
+                }
+            }
+            .listRowSeparator(.hidden)
+            .redacted(reason: .placeholder)
+        }
+        .listStyle(.plain)
+        .scrollDisabled(true)
+        .allowsHitTesting(false)
+        .pulse()
     }
 }
 
