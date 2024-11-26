@@ -8,7 +8,7 @@
 import Foundation
 
 /// Model namespace for representing a website or a folder of websites.
-indirect enum WebsiteContent: Identifiable, Equatable {
+indirect enum WebsiteContent: Identifiable, Hashable {
     
     case `static`(StaticWebsite)
     case folder(Folder)

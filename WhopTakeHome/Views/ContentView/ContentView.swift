@@ -27,6 +27,8 @@ struct ContentView: View {
     /// The flag to present the app settings sheet.
     @State
     private var isAppSettingsPresented = false
+    @State
+    private var isNewBookmarkPresented = false
     
     /// The view model for this content view.
     private var viewModel = ContentViewModel(apiClient: BasicAPIClient())
@@ -96,10 +98,18 @@ struct ContentView: View {
                         isAppSettingsPresented = true
                     }
                     .labelStyle(.iconOnly)
+                    
+                    Button("Add", systemImage: "plus.circle.fill") {
+                        isNewBookmarkPresented = true
+                    }
+                    .labelStyle(.iconOnly)
                 }
             }
             .sheet(isPresented: $isAppSettingsPresented) {
                 AppSettingsView()
+            }
+            .sheet(isPresented: $isNewBookmarkPresented) {
+                AddBookmarkView(viewModel: viewModel)
             }
         }
     }

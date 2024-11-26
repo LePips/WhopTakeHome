@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E10E67F42CF6270E0095365B /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = E10E67F32CF6270E0095365B /* Collections */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		E16CDD4F2CF416050080C68C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -39,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E10E67F42CF6270E0095365B /* Collections in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +95,7 @@
 			);
 			name = WhopTakeHome;
 			packageProductDependencies = (
+				E10E67F32CF6270E0095365B /* Collections */,
 			);
 			productName = WhopTakeHome;
 			productReference = E16CDD3E2CF416040080C68C /* WhopTakeHome.app */;
@@ -146,6 +152,9 @@
 			);
 			mainGroup = E16CDD352CF416040080C68C;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E10E67F22CF6270E0095365B /* XCRemoteSwiftPackageReference "swift-collections" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E16CDD3F2CF416040080C68C /* Products */;
 			projectDirPath = "";
@@ -442,6 +451,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E10E67F22CF6270E0095365B /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E10E67F32CF6270E0095365B /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E10E67F22CF6270E0095365B /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E16CDD362CF416040080C68C /* Project object */;
 }

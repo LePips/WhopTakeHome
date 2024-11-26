@@ -5,6 +5,7 @@
 //  Created by Ethan Pippin on 11/24/24.
 //
 
+import Collections
 import Combine
 import SwiftUI
 
@@ -40,7 +41,8 @@ final class ContentViewModel {
     private(set) var pageIndex: Int
     
     /// The content rows that have been fetched from the API.
-    private(set) var rows: [WebsiteContent]
+    private(set) var rows: OrderedSet<WebsiteContent>
+//    private(set) var rows: [WebsiteContent]
     
     /// The primary state of this view model.
     private(set) var state: State
@@ -54,6 +56,11 @@ final class ContentViewModel {
         self.pageIndex = 0
         self.rows = []
         self.state = .loading
+    }
+    
+    func addBookmark(_ title: String, url: URL) {
+        let newBookmark = WebsiteContent.static(.init(title: title, url: url))
+        rows.insert(newBookmark, at: 0)
     }
     
     /// Refresh the current view model, retrieving content
